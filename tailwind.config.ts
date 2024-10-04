@@ -2,10 +2,19 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   darkMode: ['class'],
+  mode: 'jit',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  safelist: [
+    'border-zinc-900',
+    'border-blue-950',
+    'border-rose-950',
+    'bg-zinc-900',
+    'bg-blue-950',
+    'bg-rose-950',
   ],
   theme: {
     extend: {
