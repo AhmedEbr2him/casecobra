@@ -6,16 +6,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 enum OrderStatus {
   fulfilled
   shipped
   awating_shipment
 }
+
 enum CaseColor {
   black
   blue
   rose
 }
+
 enum PhoneModel {
   iphonex
   iphone11
@@ -25,6 +28,7 @@ enum PhoneModel {
   iphone15
   iphone16
 }
+
 enum CaseMaterial {
   silicone
   polycarbonate
@@ -35,14 +39,64 @@ enum CaseFinish {
   textured
 }
 
-model Configuration { 
-  id        String @id @default(cuid())
-  width     Int
-  height    Int
-  imageUrl  String
-  color     CaseColor?
-  model     PhoneModel?
-  material  CaseMaterial?
-  finish    CaseFinish?
+model Configuration {
+  id              String        @id @default(cuid())
+  width           Int
+  height          Int
+  imageUrl        String
+  color           CaseColor?
+  model           PhoneModel?
+  material        CaseMaterial?
+  finish          CaseFinish?
   croppedImageUrl String?
+  Order           Order[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String
+  Order     Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id               String           @id @default(cuid())
+  configurationId  String
+  configuration    Configuration    @relation(fields: [configurationId], references: [id])
+  user             User             @relation(fields: [userId], references: [id])
+  userId           String
+  amount           Float
+  isPaid           Boolean          @default(false)
+  status           OrderStatus      @default(awating_shipment)
+  shippingAddress  ShippingAddress? @relation(fields: [shippingId], references: [id])
+  shippingId       String?
+  billingAddress   BillingAddress?  @relation(fields: [billingAddressId], references: [id])
+  billingAddressId String?
+  createdAt        DateTime         @default(now())
+  updated          DateTime         @updatedAt
+}
+
+model ShippingAddress {
+  id          String  @id @default(cuid())
+  name        String
+  email       String
+  phoneNumber String?
+  country     String
+  city        String
+  state       String?
+  postalCode  String
+  orders      Order[]
+}
+
+model BillingAddress {
+  id          String  @id @default(cuid())
+  name        String
+  email       String
+  phoneNumber String?
+  country     String
+  city        String
+  state       String?
+  postalCode  String
+  orders      Order[]
 }
