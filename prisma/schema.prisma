@@ -80,7 +80,8 @@ model Order {
 model ShippingAddress {
   id          String  @id @default(cuid())
   name        String
-  email       String
+  email       String?
+  street      String
   phoneNumber String?
   country     String
   city        String
@@ -92,7 +93,8 @@ model ShippingAddress {
 model BillingAddress {
   id          String  @id @default(cuid())
   name        String
-  email       String
+  street      String
+  email       String?
   phoneNumber String?
   country     String
   city        String
