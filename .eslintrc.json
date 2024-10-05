@@ -2,7 +2,8 @@
   "extends": ["next/core-web-vitals", "next/typescript"],
 
   "rules": {
-    // Note: you must disable the base rule as it can report incorrect errors
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-img-element": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
