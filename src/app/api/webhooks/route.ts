@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
       await db.order.update({
         where: {
-          id: userId,
+          id: orderId,
         },
         data: {
           isPaid: true,
