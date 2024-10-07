@@ -58,7 +58,7 @@ const DesingConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
     const router = useRouter();
 
     // saveConfig function used to execute two funcitons in the same time (save cropped image, update db)
-    const { mutate: saveConfig } = useMutation({
+    const { mutate: saveConfig, isPending } = useMutation({
         mutationKey: ['save-confing'],
         mutationFn: async (args: SaveConfigArgs) => {
             await Promise.all([saveConfiguration(), _saveConfig(args)]);
@@ -395,6 +395,9 @@ const DesingConfigurator = ({ configId, imageUrl, imageDimensions }: DesignConfi
                                         model: options.model.value,
                                     })
                                 }
+                                isLoading={isPending}
+                                disabled={isPending}
+                                loadingText='Saving'
                             >
                                 Continue <ArrowRight className='h-4 w-4 ml-1.5' />
                             </Button>
